@@ -1,16 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello</title>
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to my page! :3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-blue-500 text-yellow-500 text-center text-2xl jusify-between">
-    <h1 class="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  <script src="js/bundle.js"></script>
+<body class="min-h-screen text-slate-200 relative overflow-x-hidden">
+    <div class="fixed inset-0 -z-10 bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#8e2de2]"></div>
+    <div class="fixed inset-0 -z-10 opacity-20" style="background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 40px 40px;">
+    </div>
+    <main class="max-w-4xl mx-auto px-6 py-16 space-y-16">
+        <section class="flex justify-center">
+            <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 w-full max-w-md text-center shadow-xl">
+                <img src="https://avatars.githubusercontent.com/u/112383791?v=4" alt="avatar" class="w-32 h-32 mx-auto rounded-full border-4 border-pink-400/60 object-cover" />
+                <h1 class="mt-4 text-2xl font-bold text-white">
+          Lezii @ butwhylezi
+        </h1>
+                <p class="mt-2 text-sm text-slate-300">
+                    Occasionally writes TypeScript, mostly just stares at it.
+                </p>
+                <div class="mt-6 flex justify-center gap-6">
+                    <!-- Discord -->
+                    <a href="https://discord.com/users/910837428862984213" class="p-3 rounded-full bg-white/10 hover:bg-indigo-500/30 transition">
+                        <i class="bi bi-discord text-white hover:text-indigo-300"></i>
+                    </a>
+                    <!-- GitHub -->
+                    <a href="https://github.com/user-lezi" class="p-3 rounded-full bg-white/10 hover:bg-white/20 transition">
+                        <i class="bi bi-github text-white hover:text-gray-300"></i>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="https://instagram.com/centroidal" class="p-3 rounded-full bg-white/10 hover:bg-pink-500/30 transition">
+                        <i class="bi bi-instagram text-white hover:text-pink-300"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-lg">
+            <h2 class="text-xl font-semibold text-white mb-4">
+        About Me
+      </h2>
+            <p class="text-slate-300 leading-relaxed space-y-2">
+                I’m an <span class="text-pink-300">Indian</span> from <span class="text-purple-300">Goa</span>, 18 years old. I like coding — not in a serious “I am a programmer” way, but just for fun.
+                <br />
+                <br /> I enjoy working with <span class="text-blue-300">TypeScript</span> and
+                <span class="text-yellow-300">JavaScript</span>, mostly building Discord bots using <span class="text-indigo-300">discord.js</span>,
+                <span class="text-green-300">ForgeScript</span>, and <span class="text-red-300">BDFD</span>.
+                <br />
+                <br /> I also mess around with random projects, including a few npm packages (nobody uses them lmao), and pretty much all my code lives on GitHub.
+            </p>
+        </section>
+    </main>
+    <footer class="text-center py-6 text-sm text-slate-400">
+        Made with <span class="text-pink-400">♥</span> by Lezii!
+    </footer>
 </body>
 </html>
