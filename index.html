@@ -5,68 +5,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lezii</title>
 
+  <!-- SEO -->
+  <meta name="description" content="Lezii — 18 y/o developer from Goa who enjoys TypeScript, JavaScript, and Discord bots." />
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Lezii" />
+  <meta property="og:description" content="Occasionally writes TypeScript. Mostly just stares at it." />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/112383791?v=4" />
+
   <!-- Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
 
   <!-- Tailwind -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <link rel="stylesheet" href="style.css">
+  <!-- CSS -->
+   <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="min-h-screen bg-[#0e0f14] text-slate-200 antialiased">
 
-  <!-- Subtle grid texture -->
-  <div 
-    class="fixed inset-0 -z-10 opacity-[0.06]"
-    style="background-image: linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px); background-size: 48px 48px;">
+  <!-- Subtle grid background -->
+  <div
+    class="fixed inset-0 -z-10 opacity-[0.05]"
+    style="
+      background-image:
+        linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
+      background-size: 48px 48px;
+    ">
   </div>
+
   <main class="max-w-4xl mx-auto px-6 py-20 space-y-20">
+
     <!-- Profile Card -->
     <section class="flex justify-center">
       <div class="w-full max-w-md rounded-3xl bg-white/5 backdrop-blur-xl
                   border border-white/10 shadow-2xl
                   p-8 text-center transition hover:scale-[1.015]">
-<div class="relative w-32 h-32 mx-auto rounded-full p-[3px] bg-white/20">
-  <div class="rounded-full p-[2px] bg-white/10">
-    <img
-      src="https://avatars.githubusercontent.com/u/112383791?v=4"
-      class="w-full h-full rounded-full object-cover"
-    />
-  </div>
-</div>
+
+        <!-- Avatar -->
+        <div class="relative w-32 h-32 mx-auto rounded-full p-[3px] bg-white/20">
+          <div class="rounded-full p-[2px] bg-white/10">
+            <img
+              src="https://avatars.githubusercontent.com/u/112383791?v=4"
+              alt="Lezii profile avatar"
+              loading="lazy"
+              class="w-full h-full rounded-full object-cover"
+            />
+          </div>
+        </div>
+
         <h1 class="mt-5 text-2xl font-semibold text-white tracking-tight">
           Lezii
           <span class="block text-sm font-normal text-slate-400 mt-1">
             @butwhylezi
           </span>
         </h1>
-        <p class="mt-4 text-sm text-slate-300 leading-relaxed">
+
+        <p class="mt-4 text-[0.95rem] text-slate-300 leading-relaxed">
           Occasionally writes TypeScript.<br />
           Mostly just stares at it.
         </p>
+
         <!-- Socials -->
-        <div class="mt-7 flex justify-center gap-5">
-          <a href="https://discord.com/users/910837428862984213" class="social-btn">
+        <div class="mt-7 flex justify-center gap-6">
+          <a href="https://discord.com/users/910837428862984213" class="social-btn" aria-label="Discord profile">
             <i class="bi bi-discord"></i>
           </a>
-          <a href="https://github.com/user-lezi" class="social-btn">
+          <a href="https://github.com/user-lezi" class="social-btn" aria-label="GitHub profile">
             <i class="bi bi-github"></i>
           </a>
-          <a href="https://instagram.com/centroidal" class="social-btn">
+          <a href="https://instagram.com/centroidal" class="social-btn" aria-label="Instagram profile">
             <i class="bi bi-instagram"></i>
           </a>
         </div>
       </div>
     </section>
+
     <!-- About -->
-    <section class="rounded-3xl bg-white/4 backdrop-blur-lg
+    <section class="rounded-3xl bg-white/5 backdrop-blur-lg
                     border border-white/10 shadow-xl
-                    p-10 max-w-3xl mx-auto">
+                    p-8 max-w-3xl mx-auto">
+
       <h2 class="text-xl font-semibold text-white mb-6">
         About Me
       </h2>
-      <p class="text-slate-300 leading-relaxed">
+
+      <p class="text-slate-300 leading-relaxed text-[0.95rem]">
         I’m an <span class="text-pink-300">Indian</span> from
         <span class="text-indigo-300">Goa</span>, 18 years old.
         I like coding — not in a serious
@@ -83,10 +109,13 @@
         I also mess around with random projects, including a few npm packages
         (nobody uses them lmao), and most of my code lives on GitHub.
       </p>
-    </setion>
+    </section>
+
   </main>
-  <footer class="text-center py-8 text-sm text-slate-500">
-    Made with <span class="text-pink-400">♥</span> by Lezii
+
+  <footer class="text-center py-8 text-xs text-slate-500">
+    © 2025 · Made with <span class="text-pink-400">♥</span> by Lezii
   </footer>
+
 </body>
 </html>
