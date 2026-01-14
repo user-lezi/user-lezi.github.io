@@ -1,143 +1,192 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lezii</title>
-  <link rel="preconnect" href="https://avatars.githubusercontent.com" />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lezii</title>
 
-  <!-- SEO -->
-  <meta name="description" content="Lezii — 18 y/o developer from Goa who enjoys TypeScript, JavaScript, and Discord bots." />
-  <meta name="author" content="Lezii" />
-  <meta name="robots" content="index, follow" />
+    <link rel="preconnect" href="https://avatars.githubusercontent.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
-  <!-- Theme / UI -->
-  <meta name="theme-color" content="#0e0f14" />
-  <meta name="color-scheme" content="dark" />
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="Lezii — 18 y/o developer from Goa who enjoys TypeScript, JavaScript, and Discord bots."
+    />
+    <meta name="author" content="Lezii" />
+    <meta name="robots" content="index, follow" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Hi, I am Lezi!" />
-  <meta property="og:description" content="Occasionally writes TypeScript. Mostly just stares at it." />
-  <meta property="og:image" content="/images/banner.png" />
-  <meta property="og:site_name" content="Lezii" />
+    <!-- Theme -->
+    <meta name="theme-color" content="#0e0f14" />
+    <meta name="color-scheme" content="dark" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Lezii" />
-  <meta name="twitter:description" content="Occasionally writes TypeScript. Mostly just stares at it." />
-  <meta name="twitter:image" content="/images/banner.png" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Hi, I am Lezi!" />
+    <meta
+      property="og:description"
+      content="Occasionally writes TypeScript. Mostly just stares at it."
+    />
+    <meta property="og:image" content="/images/banner.png" />
 
-  <!-- Icons -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-    rel="stylesheet"
-  />
+    <!-- Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
 
-  <!-- Tailwind -->
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body class="min-h-screen bg-[#0e0f14] text-slate-200 antialiased">
+  <body class="min-h-screen bg-[#0e0f14] text-slate-200 antialiased">
+    <!-- Grid background -->
+    <div
+      class="fixed inset-0 -z-10 opacity-[0.05]"
+      style="
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+        background-size: 48px 48px;
+      "
+    ></div>
 
-  <!-- Subtle grid background -->
-  <div
-    class="fixed inset-0 -z-10 opacity-[0.05]"
-    style="
-      background-image:
-        linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
-      background-size: 48px 48px;
-    ">
-  </div>
-
-  <main class="max-w-4xl mx-auto px-6 py-20 space-y-20">
-
-    <!-- Profile Card -->
-    <section class="flex justify-center">
-      <div class="w-full max-w-md rounded-3xl bg-white/5 backdrop-blur-xl
-                  border border-white/10 shadow-2xl
-                  p-8 text-center transition hover:scale-[1.015]">
-
-        <!-- Avatar -->
-        <div class="relative w-32 h-32 mx-auto rounded-full p-[3px] bg-white/20">
-          <div class="rounded-full p-[2px] bg-white/10">
+    <main class="max-w-4xl mx-auto px-6 py-20 space-y-20">
+      <!-- Profile -->
+      <section class="flex justify-center">
+        <div
+          class="glass-card w-full max-w-md rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 p-8 text-center"
+        >
+          <div
+            class="avatar relative w-32 h-32 mx-auto rounded-full p-[3px] bg-white/20"
+          >
             <img
               src="https://avatars.githubusercontent.com/u/112383791?v=4"
               alt="Lezii profile avatar"
-              loading="lazy"
               class="w-full h-full rounded-full object-cover"
             />
           </div>
+
+          <h1 class="mt-5 text-2xl font-semibold text-white tracking-tight">
+            Lezii
+          </h1>
+          <p class="text-sm text-slate-400">@butwhylezi</p>
+
+          <p class="mt-4 text-[0.95rem] text-slate-300 leading-relaxed">
+            Occasionally writes TypeScript.<br />
+            Mostly just stares at it.
+          </p>
+
+          <div class="mt-7 flex justify-center gap-6">
+            <a
+              class="social-btn"
+              href="https://discord.com/users/910837428862984213"
+              aria-label="Discord"
+            >
+              <i class="bi bi-discord"></i>
+            </a>
+            <a
+              class="social-btn"
+              href="https://github.com/user-lezi"
+              aria-label="GitHub"
+            >
+              <i class="bi bi-github"></i>
+            </a>
+            <a
+              class="social-btn"
+              href="https://instagram.com/centroidal"
+              aria-label="Instagram"
+            >
+              <i class="bi bi-instagram"></i>
+            </a>
+          </div>
         </div>
+      </section>
 
-        <h1 class="mt-5 text-2xl font-semibold text-white tracking-tight">
-          Lezii
-          <span class="block text-sm font-normal text-slate-400 mt-1">
-            @butwhylezi
-          </span>
-        </h1>
+      <!-- About -->
+      <section
+        class="rounded-2xl bg-white/4 backdrop-blur-md border border-white/10 shadow-xl p-8 max-w-3xl mx-auto"
+      >
+        <h2 class="text-lg font-semibold tracking-tight text-white mb-5">
+          About Me
+        </h2>
 
-        <p class="mt-4 text-[0.95rem] text-slate-300 leading-relaxed">
-          Occasionally writes TypeScript.<br />
-          Mostly just stares at it.
+        <p class="text-[0.9rem] leading-7 text-slate-300">
+          I’m an <span style="color: rgb(var(--accent-code))">Indian</span> from
+          Goa, 18 years old. I code mostly for fun — not in a serious
+          <em>“I am a programmer”</em> way. <br /><br />
+          I enjoy working with TypeScript and JavaScript, mainly building
+          Discord bots using discord.js, ForgeScript, and BDFD.
+          <br /><br />
+          I also mess around with random projects, including a few npm packages
+          (nobody uses them lmao), and most of my code lives on GitHub.
         </p>
+      </section>
 
-        <!-- Socials -->
-        <div class="mt-7 flex justify-center gap-6">
-          <a href="https://discord.com/users/910837428862984213" class="social-btn" aria-label="Discord profile">
-            <i class="bi bi-discord"></i>
-          </a>
-          <a href="https://github.com/user-lezi" class="social-btn" aria-label="GitHub profile">
-            <i class="bi bi-github"></i>
-          </a>
-          <a href="https://instagram.com/centroidal" class="social-btn" aria-label="Instagram profile">
-            <i class="bi bi-instagram"></i>
-          </a>
-        </div>
-      </div>
-    </section>
+      <!-- Projects -->
+      <section
+        class="rounded-2xl bg-white/4 backdrop-blur-md border border-white/10 shadow-xl p-8 max-w-4xl mx-auto"
+      >
+        <h2 class="text-lg font-semibold tracking-tight text-white mb-6">
+          Projects
+        </h2>
 
-    <!-- About -->
-    <section class="rounded-3xl bg-white/5 backdrop-blur-lg
-                    border border-white/10 shadow-xl
-                    p-8 max-w-3xl mx-auto">
+        <div id="projects-grid" class="grid gap-4 sm:grid-cols-2"></div>
 
-      <h2 class="text-xl font-semibold text-white mb-6">
-        About Me
-      </h2>
+        <!-- Project Card Template -->
+        <template id="project-template">
+          <article
+            class="group rounded-xl bg-white/5 border border-white/10 p-5 transition hover:bg-white/[0.07] hover:border-white/20"
+          >
+            <div class="flex gap-4">
+              <!-- Icon -->
+              <div
+                class="project-icon w-11 h-11 rounded-lg flex items-center justify-center text-xs font-semibold bg-white/10 shrink-0"
+              ></div>
 
-      <p class="text-slate-300 leading-relaxed text-[0.95rem]">
-        I’m an <span class="text-pink-300">Indian</span> from
-        <span class="text-indigo-300">Goa</span>, 18 years old.
-        I like coding — not in a serious
-        <em>“I am a programmer”</em> way, just for fun.
-        <br /><br />
-        I enjoy working with
-        <span class="text-blue-300">TypeScript</span> and
-        <span class="text-yellow-300">JavaScript</span>,
-        mostly building Discord bots using
-        <span class="text-indigo-300">discord.js</span>,
-        <span class="text-emerald-300">ForgeScript</span>,
-        and <span class="text-rose-300">BDFD</span>.
-        <br /><br />
-        I also mess around with random projects, including a few npm packages
-        (nobody uses them lmao), and most of my code lives on GitHub.
-      </p>
-    </section>
+              <!-- Content -->
+              <div class="flex-1 min-w-0">
+                <h3
+                  class="project-name text-sm font-semibold text-white truncate"
+                ></h3>
+                <p
+                  class="project-desc text-xs text-slate-400 mt-1 leading-relaxed"
+                ></p>
 
-  </main>
-  <!--
-  Hi, You got nothing to see here.
-    - Lezi :3
-  -->
-  <footer class="text-center py-8 text-xs text-slate-500">
-    © 2025 · Made with <span class="text-pink-400">♥</span> by Lezii
-  </footer>
+                <!-- Tags -->
+                <div class="project-tags flex flex-wrap gap-2 mt-3"></div>
 
-</body>
+                <!-- Links -->
+                <div class="flex gap-4 mt-3 text-xs">
+                  <a
+                    class="project-github text-slate-300 hover:text-white"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    class="project-web text-slate-300 hover:text-white hidden"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Website
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </template>
+      </section>
+    </main>
+
+    <footer class="text-center py-6 text-[0.7rem] text-slate-600">
+      © 2025 · Made with
+      <span style="color: rgb(var(--accent-code))">♥</span> by Lezii
+    </footer>
+
+    <script src="js/bundle.js"></script>
+  </body>
 </html>

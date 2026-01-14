@@ -1,1 +1,3 @@
-console.log("hello");
+import { projectLoader } from "./projectLoader";
+
+projectLoader();
