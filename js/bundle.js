@@ -5,6 +5,245 @@
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
+  // js/compiled/color.js
+  var require_color = __commonJS({
+    "js/compiled/color.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.rgbToHsl = rgbToHsl;
+      exports.hslToRgb = hslToRgb;
+      function rgbToHsl(r, g, b) {
+        r /= 255;
+        g /= 255;
+        b /= 255;
+        const max = Math.max(r, g, b), min = Math.min(r, g, b);
+        let h = 0, s = 0, l = (max + min) / 2;
+        if (max !== min) {
+          const d = max - min;
+          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+          switch (max) {
+            case r:
+              h = (g - b) / d + (g < b ? 6 : 0);
+              break;
+            case g:
+              h = (b - r) / d + 2;
+              break;
+            case b:
+              h = (r - g) / d + 4;
+              break;
+          }
+          h *= 60;
+        }
+        return { h, s, l };
+      }
+      function hslToRgb(h, s, l) {
+        h /= 360;
+        let r, g, b;
+        if (s === 0) {
+          r = g = b = l;
+        } else {
+          const hue2rgb = (p2, q2, t) => {
+            if (t < 0)
+              t += 1;
+            if (t > 1)
+              t -= 1;
+            if (t < 1 / 6)
+              return p2 + (q2 - p2) * 6 * t;
+            if (t < 1 / 2)
+              return q2;
+            if (t < 2 / 3)
+              return p2 + (q2 - p2) * (2 / 3 - t) * 6;
+            return p2;
+          };
+          const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+          const p = 2 * l - q;
+          r = hue2rgb(p, q, h + 1 / 3);
+          g = hue2rgb(p, q, h);
+          b = hue2rgb(p, q, h - 1 / 3);
+        }
+        return {
+          r: Math.round(r * 255),
+          g: Math.round(g * 255),
+          b: Math.round(b * 255)
+        };
+      }
+    }
+  });
+
+  // js/compiled/easterEggActions.js
+  var require_easterEggActions = __commonJS({
+    "js/compiled/easterEggActions.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.spinAccentHue = spinAccentHue;
+      exports.uwuifyPage = uwuifyPage;
+      exports.undoUwuifyPage = undoUwuifyPage;
+      exports.uwuifyText = uwuifyText;
+      var color_1 = require_color();
+      function spinAccentHue() {
+        const root = document.documentElement;
+        const current = getComputedStyle(root).getPropertyValue("--accent-code").trim();
+        let [r, g, b] = current.split(",").map((x) => parseInt(x.trim()));
+        let { h, s, l } = (0, color_1.rgbToHsl)(r, g, b);
+        let step = 0;
+        const totalSteps = 360;
+        const intervalMs = 40;
+        const interval = setInterval(() => {
+          step++;
+          h = (h + 1) % 360;
+          const { r: nr, g: ng, b: nb } = (0, color_1.hslToRgb)(h, s, l);
+          root.style.setProperty("--accent-code", `${nr}, ${ng}, ${nb}`);
+          if (step >= totalSteps) {
+            clearInterval(interval);
+            root.style.setProperty("--accent-code", current);
+          }
+        }, intervalMs);
+      }
+      async function uwuifyPage(delay = 20) {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          if (node.textContent?.trim())
+            nodes.push(node);
+        }
+        let i = 0;
+        for (const node of nodes) {
+          const original = node.textContent;
+          const uwu = uwuifyText(original);
+          if (uwu !== original) {
+            const span = document.createElement("span");
+            span.textContent = uwu;
+            span.dataset.uwu = "true";
+            span.dataset.original = original;
+            span.style.background = "rgba(var(--accent-code), 0.15)";
+            span.style.transition = "background 1s ease";
+            node.replaceWith(span);
+            setTimeout(() => {
+              span.style.background = "transparent";
+            }, 500 + delay * i);
+            i++;
+            await sleep(delay);
+          }
+        }
+      }
+      async function undoUwuifyPage(delay = 10) {
+        const uwuNodes = Array.from(document.querySelectorAll("span[data-uwu='true']"));
+        for (const span of uwuNodes) {
+          const original = span.dataset.original;
+          if (!original)
+            continue;
+          const textNode = document.createTextNode(original);
+          span.style.background = "rgba(var(--accent-code), 0.2)";
+          span.style.transition = "background 0.4s ease";
+          span.replaceWith(textNode);
+          await sleep(delay);
+        }
+      }
+      function uwuifyText(text) {
+        return text.replace(/r|l/g, "w").replace(/R|L/g, "W").replace(/n([aeiou])/gi, "ny$1").replace(/!+/g, " uwu!");
+      }
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+    }
+  });
+
+  // js/compiled/easterEggs.js
+  var require_easterEggs = __commonJS({
+    "js/compiled/easterEggs.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.easterEggs = void 0;
+      var easterEggActions_1 = require_easterEggActions();
+      exports.easterEggs = [
+        {
+          sequence: [
+            "ArrowUp",
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowDown",
+            "ArrowLeft",
+            "ArrowRight",
+            "ArrowLeft",
+            "ArrowRight",
+            "b",
+            "a"
+          ],
+          action: () => {
+            console.log("%cYou found the secret Konami!", "color: rgb(var(--accent-code)); font-size:16px");
+          },
+          description: "Konami console log",
+          once: true
+        },
+        {
+          sequence: ["u", "w", "u"],
+          action: async () => {
+            await (0, easterEggActions_1.uwuifyPage)(25);
+          },
+          description: "UwUifies the entire page.",
+          once: false
+        },
+        {
+          sequence: ["d", "e", "u", "w", "u"],
+          action: async () => {
+            await (0, easterEggActions_1.undoUwuifyPage)(15);
+          },
+          description: "deUwUifies the entire page.",
+          once: false
+        },
+        {
+          sequence: ["s", "p", "i", "n"],
+          action: () => (0, easterEggActions_1.spinAccentHue)(),
+          description: "Spin accent hue 360",
+          once: false
+        }
+      ].sort((a, b) => b.sequence.length - a.sequence.length);
+      var keyBuffer = [];
+      var maxSequenceLength = Math.max(...exports.easterEggs.map((e) => e.sequence.length));
+      var eggRunning = false;
+      window.addEventListener("keydown", (e) => {
+        keyBuffer.push(e.key);
+        if (keyBuffer.length > maxSequenceLength)
+          keyBuffer.shift();
+        for (const egg of exports.easterEggs) {
+          if (egg.sequence.length === 0)
+            continue;
+          if (!sequenceAtEnd(egg.sequence, keyBuffer))
+            continue;
+          if (eggRunning)
+            return;
+          eggRunning = true;
+          try {
+            const result = egg.action();
+            if (result instanceof Promise) {
+              result.finally(() => {
+                eggRunning = false;
+              });
+            } else {
+              eggRunning = false;
+            }
+          } catch (err) {
+            console.error("Easter egg failed:", err);
+            eggRunning = false;
+          }
+          if (egg.once)
+            egg.sequence = [];
+          break;
+        }
+      });
+      function sequenceAtEnd(seq, buffer) {
+        if (seq.length > buffer.length)
+          return false;
+        for (let i = 0; i < seq.length; i++) {
+          if (buffer[buffer.length - seq.length + i] !== seq[i])
+            return false;
+        }
+        return true;
+      }
+    }
+  });
+
   // js/compiled/markdown.js
   var require_markdown = __commonJS({
     "js/compiled/markdown.js"(exports) {
@@ -169,6 +408,7 @@
   var require_index = __commonJS({
     "js/compiled/index.js"(exports) {
       Object.defineProperty(exports, "__esModule", { value: true });
+      require_easterEggs();
       var projectLoader_1 = require_projectLoader();
       (0, projectLoader_1.projectLoader)();
     }
