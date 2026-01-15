@@ -2,7 +2,10 @@
   --accent-code: 236, 72, 153;
   transition: var(--accent-code) 600ms;
 }
-
+::selection {
+  background: rgba(var(--accent-code), 0.35);
+  color: #fff;
+}
 /* Subtle vignette */
 body::after {
   content: "";
