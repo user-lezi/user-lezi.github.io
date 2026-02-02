@@ -1,4 +1,4 @@
-import { uwuifyPage, spinAccentHue, undoUwuifyPage } from "./easterEggActions";
+import { uwuifyPage, spinAccentHue, undoUwuifyPage } from "./actions";
 
 export type EggAction = () => void | Promise<void>;
 

@@ -1,4 +1,6 @@
-import { rgbToHsl, hslToRgb } from "./color";
+import { Converter } from "../util/color";
+import { sleep } from "../util/sleep";
+import { uwuifyText } from "../util/uwuify";
 
 export function spinAccentHue() {
   const root = document.documentElement;
@@ -10,7 +12,7 @@ export function spinAccentHue() {
 
   let [r, g, b] = current.split(",").map((x) => parseInt(x.trim()));
 
-  let { h, s, l } = rgbToHsl(r, g, b);
+  let { h, s, l } = Converter.rgbToHsl(r, g, b);
 
   let step = 0;
   const totalSteps = 360;
@@ -19,7 +21,7 @@ export function spinAccentHue() {
   const interval = setInterval(() => {
     step++;
     h = (h + 1) % 360; // rotate hue slowly
-    const { r: nr, g: ng, b: nb } = hslToRgb(h, s, l);
+    const { r: nr, g: ng, b: nb } = Converter.hslToRgb(h, s, l);
 
     root.style.setProperty("--accent-code", `${nr}, ${ng}, ${nb}`);
 
@@ -84,31 +86,4 @@ export async function undoUwuifyPage(delay = 10) {
 
     await sleep(delay);
   }
-}
-
-export function uwuifyText(text: string): string {
-  let out = text;
-
-  // r/l → w
-  out = out.replace(/[rl]/g, "w").replace(/[RL]/g, "W");
-
-  // n + vowel → ny
-  out = out.replace(/\bn([aeiou])/gi, "ny$1");
-
-  // soft stutters
-  out = out.replace(/\b([a-z])/gi, (m, p1) =>
-    Math.random() < 0.1 ? `${p1}-${m}` : m,
-  );
-
-  // punctuation flavor
-  out = out.replace(/!+/g, () => {
-    const faces = [" uwu!", " owo!", " >_<!", " 😳!"];
-    return faces[Math.floor(Math.random() * faces.length)];
-  });
-
-  return out;
-}
-
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }

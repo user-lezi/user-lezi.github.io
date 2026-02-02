@@ -5,13 +5,43 @@
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
-  // js/compiled/color.js
+  // js/compiled/util/color.js
   var require_color = __commonJS({
-    "js/compiled/color.js"(exports) {
+    "js/compiled/util/color.js"(exports) {
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.rgbToHsl = rgbToHsl;
-      exports.hslToRgb = hslToRgb;
+      exports.Converter = void 0;
+      exports.normalizeHex = normalizeHex;
+      exports.resolveColor = resolveColor;
+      function normalizeHex(hex) {
+        if (hex.length === 4) {
+          return "#" + hex.slice(1).split("").map((c) => c + c).join("");
+        }
+        return hex.toLowerCase();
+      }
+      function resolveColor(color) {
+        if (typeof color === "number") {
+          return `#${color.toString(16).padStart(6, "0")}`;
+        }
+        if (color.startsWith("var(")) {
+          const value = getComputedStyle(document.documentElement).getPropertyValue(color.slice(4, -1)).trim();
+          let [r, g, b] = value.split(",").map((v) => parseInt(v.trim(), 10));
+          return rgbToHex(r, g, b);
+        }
+        if (color.includes(",")) {
+          let [r, g, b] = color.split(",").map((v) => parseInt(v.trim(), 10));
+          return rgbToHex(r, g, b);
+        }
+        if (color.startsWith("#")) {
+          return normalizeHex(color);
+        }
+        throw new Error(`Unsupported color format: ${color}`);
+      }
+      exports.Converter = {
+        hslToRgb,
+        rgbToHsl,
+        rgbToHex
+      };
       function rgbToHsl(r, g, b) {
         r /= 255;
         g /= 255;
@@ -67,31 +97,67 @@
           b: Math.round(b * 255)
         };
       }
+      function rgbToHex(r, g, b) {
+        return "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("");
+      }
     }
   });
 
-  // js/compiled/easterEggActions.js
-  var require_easterEggActions = __commonJS({
-    "js/compiled/easterEggActions.js"(exports) {
+  // js/compiled/util/sleep.js
+  var require_sleep = __commonJS({
+    "js/compiled/util/sleep.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.sleep = sleep;
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+    }
+  });
+
+  // js/compiled/util/uwuify.js
+  var require_uwuify = __commonJS({
+    "js/compiled/util/uwuify.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.uwuifyText = uwuifyText;
+      function uwuifyText(text) {
+        let out = text;
+        out = out.replace(/[rl]/g, "w").replace(/[RL]/g, "W");
+        out = out.replace(/\bn([aeiou])/gi, "ny$1");
+        out = out.replace(/\b([a-z])/gi, (m, p1) => Math.random() < 0.1 ? `${p1}-${m}` : m);
+        out = out.replace(/!+/g, () => {
+          const faces = [" uwu!", " owo!", " >_<!", " \u{1F633}!"];
+          return faces[Math.floor(Math.random() * faces.length)];
+        });
+        return out;
+      }
+    }
+  });
+
+  // js/compiled/easter-eggs/actions.js
+  var require_actions = __commonJS({
+    "js/compiled/easter-eggs/actions.js"(exports) {
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.spinAccentHue = spinAccentHue;
       exports.uwuifyPage = uwuifyPage;
       exports.undoUwuifyPage = undoUwuifyPage;
-      exports.uwuifyText = uwuifyText;
       var color_1 = require_color();
+      var sleep_1 = require_sleep();
+      var uwuify_1 = require_uwuify();
       function spinAccentHue() {
         const root = document.documentElement;
         const current = getComputedStyle(root).getPropertyValue("--accent-code").trim();
         let [r, g, b] = current.split(",").map((x) => parseInt(x.trim()));
-        let { h, s, l } = (0, color_1.rgbToHsl)(r, g, b);
+        let { h, s, l } = color_1.Converter.rgbToHsl(r, g, b);
         let step = 0;
         const totalSteps = 360;
         const intervalMs = 40;
         const interval = setInterval(() => {
           step++;
           h = (h + 1) % 360;
-          const { r: nr, g: ng, b: nb } = (0, color_1.hslToRgb)(h, s, l);
+          const { r: nr, g: ng, b: nb } = color_1.Converter.hslToRgb(h, s, l);
           root.style.setProperty("--accent-code", `${nr}, ${ng}, ${nb}`);
           if (step >= totalSteps) {
             clearInterval(interval);
@@ -110,7 +176,7 @@
         let i = 0;
         for (const node of nodes) {
           const original = node.textContent;
-          const uwu = uwuifyText(original);
+          const uwu = (0, uwuify_1.uwuifyText)(original);
           if (uwu !== original) {
             const span = document.createElement("span");
             span.textContent = uwu;
@@ -123,7 +189,7 @@
               span.style.background = "transparent";
             }, 500 + delay * i);
             i++;
-            await sleep(delay);
+            await (0, sleep_1.sleep)(delay);
           }
         }
       }
@@ -137,33 +203,19 @@
           span.style.background = "rgba(var(--accent-code), 0.2)";
           span.style.transition = "background 0.4s ease";
           span.replaceWith(textNode);
-          await sleep(delay);
+          await (0, sleep_1.sleep)(delay);
         }
-      }
-      function uwuifyText(text) {
-        let out = text;
-        out = out.replace(/[rl]/g, "w").replace(/[RL]/g, "W");
-        out = out.replace(/\bn([aeiou])/gi, "ny$1");
-        out = out.replace(/\b([a-z])/gi, (m, p1) => Math.random() < 0.1 ? `${p1}-${m}` : m);
-        out = out.replace(/!+/g, () => {
-          const faces = [" uwu!", " owo!", " >_<!", " \u{1F633}!"];
-          return faces[Math.floor(Math.random() * faces.length)];
-        });
-        return out;
-      }
-      function sleep(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
       }
     }
   });
 
-  // js/compiled/easterEggs.js
-  var require_easterEggs = __commonJS({
-    "js/compiled/easterEggs.js"(exports) {
+  // js/compiled/easter-eggs/index.js
+  var require_easter_eggs = __commonJS({
+    "js/compiled/easter-eggs/index.js"(exports) {
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.easterEggs = void 0;
-      var easterEggActions_1 = require_easterEggActions();
+      var actions_1 = require_actions();
       exports.easterEggs = [
         {
           sequence: [
@@ -187,7 +239,7 @@
         {
           sequence: ["u", "w", "u"],
           action: async () => {
-            await (0, easterEggActions_1.uwuifyPage)(25);
+            await (0, actions_1.uwuifyPage)(25);
           },
           description: "UwUifies the entire page.",
           once: false
@@ -195,14 +247,14 @@
         {
           sequence: ["d", "e", "u", "w", "u"],
           action: async () => {
-            await (0, easterEggActions_1.undoUwuifyPage)(15);
+            await (0, actions_1.undoUwuifyPage)(15);
           },
           description: "deUwUifies the entire page.",
           once: false
         },
         {
           sequence: ["s", "p", "i", "n"],
-          action: () => (0, easterEggActions_1.spinAccentHue)(),
+          action: () => (0, actions_1.spinAccentHue)(),
           description: "Spin accent hue 360",
           once: false
         }
@@ -252,9 +304,9 @@
     }
   });
 
-  // js/compiled/markdown.js
+  // js/compiled/util/markdown.js
   var require_markdown = __commonJS({
-    "js/compiled/markdown.js"(exports) {
+    "js/compiled/util/markdown.js"(exports) {
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.parseMarkdown = parseMarkdown;
@@ -268,14 +320,12 @@
     }
   });
 
-  // js/compiled/projectLoader.js
-  var require_projectLoader = __commonJS({
-    "js/compiled/projectLoader.js"(exports) {
+  // js/compiled/projects/projects.js
+  var require_projects = __commonJS({
+    "js/compiled/projects/projects.js"(exports) {
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.ColoredTags = exports.AccentTags = exports.Projects = void 0;
-      exports.projectLoader = projectLoader;
-      var markdown_1 = require_markdown();
+      exports.Projects = void 0;
       exports.Projects = [
         {
           name: "ForgeIndia",
@@ -304,6 +354,19 @@
           web: null
         }
       ];
+    }
+  });
+
+  // js/compiled/projects/loader.js
+  var require_loader = __commonJS({
+    "js/compiled/projects/loader.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.ColoredTags = exports.AccentTags = void 0;
+      exports.projectLoader = projectLoader;
+      var color_1 = require_color();
+      var markdown_1 = require_markdown();
+      var projects_1 = require_projects();
       exports.AccentTags = [
         "forgescript",
         "typescript"
@@ -333,7 +396,7 @@
         const template = document.getElementById("project-template");
         if (!grid || !template)
           return;
-        exports.Projects.forEach((project) => {
+        projects_1.Projects.forEach((project) => {
           const clone = template.content.cloneNode(true);
           const icon = clone.querySelector(".project-icon");
           const name = clone.querySelector(".project-name");
@@ -358,7 +421,7 @@
             chip.className = "text-[0.65rem] px-2 py-[2px] rounded-md bg-white/8 text-slate-300 border border-white/10";
             const color = exports.ColoredTags[tag];
             if (color || exports.AccentTags.includes(tag)) {
-              let resolved = resolveColor(color ?? "var(--accent-code)");
+              let resolved = (0, color_1.resolveColor)(color ?? "var(--accent-code)");
               chip.dataset.colored = "true";
               if (exports.AccentTags.includes(tag)) {
                 chip.dataset.accent = "true";
@@ -384,32 +447,6 @@
       function acronym(name) {
         return name.split(" ").map((w) => w[0]).join("").slice(0, 3).toUpperCase();
       }
-      function resolveColor(color) {
-        if (typeof color === "number") {
-          return `#${color.toString(16).padStart(6, "0")}`;
-        }
-        if (color.startsWith("var(")) {
-          const value = getComputedStyle(document.documentElement).getPropertyValue(color.slice(4, -1)).trim();
-          return rgbToHex(value);
-        }
-        if (color.includes(",")) {
-          return rgbToHex(color);
-        }
-        if (color.startsWith("#")) {
-          return normalizeHex(color);
-        }
-        throw new Error(`Unsupported color format: ${color}`);
-      }
-      function normalizeHex(hex) {
-        if (hex.length === 4) {
-          return "#" + hex.slice(1).split("").map((c) => c + c).join("");
-        }
-        return hex.toLowerCase();
-      }
-      function rgbToHex(rgb) {
-        const [r, g, b] = rgb.split(",").map((v) => parseInt(v.trim(), 10));
-        return "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("");
-      }
     }
   });
 
@@ -417,10 +454,10 @@
   var require_index = __commonJS({
     "js/compiled/index.js"(exports) {
       Object.defineProperty(exports, "__esModule", { value: true });
-      require_easterEggs();
-      var projectLoader_1 = require_projectLoader();
+      require_easter_eggs();
+      var loader_1 = require_loader();
       if (document.querySelector("div#projects-grid"))
-        (0, projectLoader_1.projectLoader)();
+        (0, loader_1.projectLoader)();
     }
   });
   require_index();

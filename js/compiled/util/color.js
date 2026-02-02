@@ -1,7 +1,44 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rgbToHsl = rgbToHsl;
-exports.hslToRgb = hslToRgb;
+exports.Converter = void 0;
+exports.normalizeHex = normalizeHex;
+exports.resolveColor = resolveColor;
+function normalizeHex(hex) {
+    if (hex.length === 4) {
+        return ("#" +
+            hex
+                .slice(1)
+                .split("")
+                .map((c) => c + c)
+                .join(""));
+    }
+    return hex.toLowerCase();
+}
+function resolveColor(color) {
+    if (typeof color === "number") {
+        return `#${color.toString(16).padStart(6, "0")}`;
+    }
+    if (color.startsWith("var(")) {
+        const value = getComputedStyle(document.documentElement)
+            .getPropertyValue(color.slice(4, -1))
+            .trim();
+        let [r, g, b] = value.split(",").map((v) => parseInt(v.trim(), 10));
+        return rgbToHex(r, g, b);
+    }
+    if (color.includes(",")) {
+        let [r, g, b] = color.split(",").map((v) => parseInt(v.trim(), 10));
+        return rgbToHex(r, g, b);
+    }
+    if (color.startsWith("#")) {
+        return normalizeHex(color);
+    }
+    throw new Error(`Unsupported color format: ${color}`);
+}
+exports.Converter = {
+    hslToRgb,
+    rgbToHsl,
+    rgbToHex,
+};
 function rgbToHsl(r, g, b) {
     r /= 255;
     g /= 255;
@@ -57,4 +94,7 @@ function hslToRgb(h, s, l) {
         g: Math.round(g * 255),
         b: Math.round(b * 255),
     };
+}
+function rgbToHex(r, g, b) {
+    return "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("");
 }

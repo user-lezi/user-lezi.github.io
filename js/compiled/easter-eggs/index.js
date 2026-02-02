@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.easterEggs = void 0;
-const easterEggActions_1 = require("./easterEggActions");
+const actions_1 = require("./actions");
 exports.easterEggs = [
     {
         sequence: [
@@ -25,7 +25,7 @@ exports.easterEggs = [
     {
         sequence: ["u", "w", "u"],
         action: async () => {
-            await (0, easterEggActions_1.uwuifyPage)(25);
+            await (0, actions_1.uwuifyPage)(25);
         },
         description: "UwUifies the entire page.",
         once: false,
@@ -33,14 +33,14 @@ exports.easterEggs = [
     {
         sequence: ["d", "e", "u", "w", "u"],
         action: async () => {
-            await (0, easterEggActions_1.undoUwuifyPage)(15);
+            await (0, actions_1.undoUwuifyPage)(15);
         },
         description: "deUwUifies the entire page.",
         once: false,
     },
     {
         sequence: ["s", "p", "i", "n"],
-        action: () => (0, easterEggActions_1.spinAccentHue)(),
+        action: () => (0, actions_1.spinAccentHue)(),
         description: "Spin accent hue 360",
         once: false,
     },

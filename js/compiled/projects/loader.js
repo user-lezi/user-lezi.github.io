@@ -1,36 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ColoredTags = exports.AccentTags = exports.Projects = void 0;
+exports.ColoredTags = exports.AccentTags = void 0;
 exports.projectLoader = projectLoader;
-const markdown_1 = require("./markdown");
-exports.Projects = [
-    {
-        name: "ForgeIndia",
-        order: 1,
-        description: "Hinglish-powered ForgeScript extension.",
-        github: "weebforge/ForgeIndia",
-        tags: ["forgescript", "typescript", "npm"],
-        image: null,
-        web: null,
-    },
-    {
-        name: "ForgeColor",
-        order: 2,
-        description: "A ForgeScript extension for generating gradients, color palettes, and blends — with built-in color theory, contrast, and accessibility tools.",
-        github: "user-lezi/ForgeColor",
-        tags: ["forgescript", "typescript", "npm"],
-        image: null,
-        web: "https://docs.botforge.org/?p=ForgeColor",
-    },
-    {
-        name: "Test Bot BDFD",
-        description: "**Test-Bot-BDFD** is a Discord bot made in **BDFD (bdscript)** — because apparently I was bored enough to code instead of sleeping.\nIt does stuff. You can use it if you want. 😎",
-        github: "user-lezi/Test-Bot-BDFD",
-        tags: ["bdfd", "bot"],
-        image: "https://cdn.discordapp.com/avatars/941584115222859816/1f8bbdbe9168fde63769540e108a603f.png?size=1024",
-        web: null,
-    },
-];
+const color_1 = require("../util/color");
+const markdown_1 = require("../util/markdown");
+const projects_1 = require("./projects");
 exports.AccentTags = [
     "forgescript",
     "typescript",
@@ -79,7 +53,7 @@ async function projectLoader() {
     const template = document.getElementById("project-template");
     if (!grid || !template)
         return;
-    exports.Projects.forEach((project) => {
+    projects_1.Projects.forEach((project) => {
         const clone = template.content.cloneNode(true);
         const icon = clone.querySelector(".project-icon");
         const name = clone.querySelector(".project-name");
@@ -106,7 +80,7 @@ async function projectLoader() {
                     "bg-white/8 text-slate-300 border border-white/10";
             const color = exports.ColoredTags[tag];
             if (color || exports.AccentTags.includes(tag)) {
-                let resolved = resolveColor(color ?? "var(--accent-code)");
+                let resolved = (0, color_1.resolveColor)(color ?? "var(--accent-code)");
                 chip.dataset.colored = "true";
                 if (exports.AccentTags.includes(tag)) {
                     chip.dataset.accent = "true";
@@ -137,37 +111,4 @@ function acronym(name) {
         .join("")
         .slice(0, 3)
         .toUpperCase();
-}
-function resolveColor(color) {
-    if (typeof color === "number") {
-        return `#${color.toString(16).padStart(6, "0")}`;
-    }
-    if (color.startsWith("var(")) {
-        const value = getComputedStyle(document.documentElement)
-            .getPropertyValue(color.slice(4, -1))
-            .trim();
-        return rgbToHex(value);
-    }
-    if (color.includes(",")) {
-        return rgbToHex(color);
-    }
-    if (color.startsWith("#")) {
-        return normalizeHex(color);
-    }
-    throw new Error(`Unsupported color format: ${color}`);
-}
-function normalizeHex(hex) {
-    if (hex.length === 4) {
-        return ("#" +
-            hex
-                .slice(1)
-                .split("")
-                .map((c) => c + c)
-                .join(""));
-    }
-    return hex.toLowerCase();
-}
-function rgbToHex(rgb) {
-    const [r, g, b] = rgb.split(",").map((v) => parseInt(v.trim(), 10));
-    return "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("");
 }
