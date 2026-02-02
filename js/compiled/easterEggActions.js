@@ -68,11 +68,15 @@ async function undoUwuifyPage(delay = 10) {
     }
 }
 function uwuifyText(text) {
-    return text
-        .replace(/r|l/g, "w")
-        .replace(/R|L/g, "W")
-        .replace(/n([aeiou])/gi, "ny$1")
-        .replace(/!+/g, " uwu!");
+    let out = text;
+    out = out.replace(/[rl]/g, "w").replace(/[RL]/g, "W");
+    out = out.replace(/\bn([aeiou])/gi, "ny$1");
+    out = out.replace(/\b([a-z])/gi, (m, p1) => Math.random() < 0.1 ? `${p1}-${m}` : m);
+    out = out.replace(/!+/g, () => {
+        const faces = [" uwu!", " owo!", " >_<!", " 😳!"];
+        return faces[Math.floor(Math.random() * faces.length)];
+    });
+    return out;
 }
 function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
