@@ -328,27 +328,20 @@
       exports.Projects = void 0;
       exports.Projects = [
         {
-          name: "ForgeIndia",
+          name: "WeebForge",
           order: 1,
-          description: "Hinglish-powered ForgeScript extension.",
-          github: "weebforge/ForgeIndia",
-          tags: ["forgescript", "typescript", "npm"],
-          image: null,
+          description: "Small Team of Developers providing an extensive library for ForgeScript.",
+          github: "weebforge",
+          org: true,
+          tags: ["forgescript", "typescript", "npm", "discord"],
+          image: "https://avatars.githubusercontent.com/u/232826805?s=1000v=4",
           web: null
-        },
-        {
-          name: "ForgeColor",
-          order: 2,
-          description: "A ForgeScript extension for generating gradients, color palettes, and blends \u2014 with built-in color theory, contrast, and accessibility tools.",
-          github: "user-lezi/ForgeColor",
-          tags: ["forgescript", "typescript", "npm"],
-          image: null,
-          web: "https://docs.botforge.org/?p=ForgeColor"
         },
         {
           name: "Test Bot BDFD",
           description: "**Test-Bot-BDFD** is a Discord bot made in **BDFD (bdscript)** \u2014 because apparently I was bored enough to code instead of sleeping.\nIt does stuff. You can use it if you want. \u{1F60E}",
           github: "user-lezi/Test-Bot-BDFD",
+          org: false,
           tags: ["bdfd", "bot"],
           image: "https://cdn.discordapp.com/avatars/941584115222859816/1f8bbdbe9168fde63769540e108a603f.png?size=1024",
           web: null
@@ -408,7 +401,7 @@
             return;
           name.textContent = project.name;
           desc.innerHTML = (0, markdown_1.parseMarkdown)(project.description);
-          github.href = `https://github.com/${project.github}`;
+          github.href = `https://github.com/${project.org ? `org/${project.github}` : project.github}`;
           if (project.web) {
             web.href = project.web;
             web.classList.remove("hidden");
