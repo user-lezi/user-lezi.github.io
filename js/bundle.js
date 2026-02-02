@@ -411,7 +411,10 @@
       Object.defineProperty(exports, "__esModule", { value: true });
       require_easterEggs();
       var projectLoader_1 = require_projectLoader();
-      (0, projectLoader_1.projectLoader)();
+      var path = window.location.pathname;
+      if (path === "/" || path === "/index" || path === "/index.html") {
+        (0, projectLoader_1.projectLoader)();
+      }
     }
   });
   require_index();
