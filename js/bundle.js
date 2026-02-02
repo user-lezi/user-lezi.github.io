@@ -273,10 +273,10 @@
           name: "ForgeIndia",
           order: 1,
           description: "Hinglish-powered ForgeScript extension.",
-          github: "user-lezi/ForgeIndia",
+          github: "weebforge/ForgeIndia",
           tags: ["forgescript", "typescript", "npm"],
           image: null,
-          web: "https://docs.botforge.org/?p=ForgeIndia"
+          web: null
         },
         {
           name: "ForgeColor",
