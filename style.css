@@ -56,12 +56,40 @@ body::after {
   transition:
     background 150ms ease,
     transform 150ms ease;
+  position: relative;
+}
+
+.social-btn::after {
+  content: attr(data-handle);
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%) translateY(0.15rem);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+
+  background: rgba(var(--accent-code), 0.68);
+  color: white;
+
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
 }
 
 .social-btn:hover {
   background: rgba(var(--accent-code), 0.15);
   transform: translateY(-1px);
   color: white;
+}
+
+.social-btn:hover::after,
+.social-btn:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 .social-btn:focus-visible {
