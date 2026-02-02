@@ -37,6 +37,7 @@ exports.AccentTags = [
 ];
 exports.ColoredTags = {
     experiment: 0xffff00,
+    npm: 0xcb3837,
 };
 function projectPriority(project) {
     if (project.tags.some((t) => exports.AccentTags.includes(t)))

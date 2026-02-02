@@ -58,6 +58,7 @@ export const AccentTags = [
 ] as const satisfies readonly ProjectTag[];
 export const ColoredTags: Partial<Record<ProjectTag, number | string>> = {
   experiment: 0xffff00,
+  npm: 0xcb3837,
 };
 
 function projectPriority(project: IProject): number {

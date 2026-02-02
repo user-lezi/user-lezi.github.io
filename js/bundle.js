@@ -301,7 +301,8 @@
         "typescript"
       ];
       exports.ColoredTags = {
-        experiment: 16776960
+        experiment: 16776960,
+        npm: 13318199
       };
       function tagPriority(tag) {
         if (exports.AccentTags.includes(tag))
