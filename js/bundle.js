@@ -401,7 +401,7 @@
             return;
           name.textContent = project.name;
           desc.innerHTML = (0, markdown_1.parseMarkdown)(project.description);
-          github.href = `https://github.com/${project.org ? `org/${project.github}` : project.github}`;
+          github.href = `https://github.com/${project.org}`;
           if (project.web) {
             web.href = project.web;
             web.classList.remove("hidden");
