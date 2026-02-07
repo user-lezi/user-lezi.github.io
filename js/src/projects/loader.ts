@@ -70,7 +70,7 @@ export async function projectLoader() {
     desc.innerHTML = parseMarkdown(project.description);
 
     // GitHub
-    github.href = `https://github.com/${project.org}`;
+    github.href = `https://github.com/${project.github}`;
 
     // Website
     if (project.web) {

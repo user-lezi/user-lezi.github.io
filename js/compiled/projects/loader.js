@@ -65,7 +65,7 @@ async function projectLoader() {
             return;
         name.textContent = project.name;
         desc.innerHTML = (0, markdown_1.parseMarkdown)(project.description);
-        github.href = `https://github.com/${project.org}`;
+        github.href = `https://github.com/${project.github}`;
         if (project.web) {
             web.href = project.web;
             web.classList.remove("hidden");
