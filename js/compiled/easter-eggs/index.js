@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.easterEggs = void 0;
+require("./lont");
 const actions_1 = require("./actions");
 exports.easterEggs = [
     {

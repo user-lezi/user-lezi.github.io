@@ -5,6 +5,26 @@
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
+  // js/compiled/easter-eggs/lont.js
+  var require_lont = __commonJS({
+    "js/compiled/easter-eggs/lont.js"() {
+      "use strict";
+      var lontCount = 0;
+      document.querySelectorAll("[lont]").forEach((el) => {
+        el.addEventListener("click", () => {
+          lontCount++;
+          if (lontCount === 5)
+            changeFont();
+        });
+      });
+      function changeFont() {
+        const style = document.createElement("style");
+        style.textContent = `@font-face { font-family: "Lont"; src: url("./fonts/Lont-Regular.ttf") format("truetype"); } body { font-family: "Lont", san-serif; }`;
+        document.head.appendChild(style);
+      }
+    }
+  });
+
   // js/compiled/util/color.js
   var require_color = __commonJS({
     "js/compiled/util/color.js"(exports) {
@@ -215,6 +235,7 @@
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.easterEggs = void 0;
+      require_lont();
       var actions_1 = require_actions();
       exports.easterEggs = [
         {

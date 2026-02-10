@@ -6,6 +6,11 @@
   background: rgba(var(--accent-code), 0.35);
   color: #fff;
 }
+
+body {
+  transition: font-family 1s ease;
+}
+
 /* Subtle vignette */
 body::after {
   content: "";
