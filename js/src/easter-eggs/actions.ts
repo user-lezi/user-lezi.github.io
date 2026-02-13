@@ -1,6 +1,7 @@
 import { Converter } from "../util/color";
 import { sleep } from "../util/sleep";
 import { uwuifyText } from "../util/uwuify";
+import { yapper } from "../yapper";
 
 export function spinAccentHue() {
   const root = document.documentElement;
@@ -67,6 +68,7 @@ export async function uwuifyPage(delay = 20) {
       await sleep(delay);
     }
   }
+  yapper.yap(`*UwU :3*`, true);
 }
 export async function undoUwuifyPage(delay = 10) {
   const uwuNodes = Array.from(

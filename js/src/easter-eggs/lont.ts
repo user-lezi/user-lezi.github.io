@@ -1,10 +1,16 @@
+import { yapper } from "../yapper";
+
 let lontCount = 0;
 
 // select
 document.querySelectorAll("[lont]").forEach((el) => {
   el.addEventListener("click", () => {
     lontCount++;
-    if (lontCount === 5) changeFont();
+    if (lontCount === 4) yapper.yap("One more?", true);
+    if (lontCount === 5) {
+      changeFont();
+      yapper.yap("**let me cook 🔥🔥**", true);
+    }
   });
 });
 

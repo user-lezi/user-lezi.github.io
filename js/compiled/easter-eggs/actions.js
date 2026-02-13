@@ -6,6 +6,7 @@ exports.undoUwuifyPage = undoUwuifyPage;
 const color_1 = require("../util/color");
 const sleep_1 = require("../util/sleep");
 const uwuify_1 = require("../util/uwuify");
+const yapper_1 = require("../yapper");
 function spinAccentHue() {
     const root = document.documentElement;
     const current = getComputedStyle(root)
@@ -54,6 +55,7 @@ async function uwuifyPage(delay = 20) {
             await (0, sleep_1.sleep)(delay);
         }
     }
+    yapper_1.yapper.yap(`*UwU :3*`, true);
 }
 async function undoUwuifyPage(delay = 10) {
     const uwuNodes = Array.from(document.querySelectorAll("span[data-uwu='true']"));

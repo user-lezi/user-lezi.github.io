@@ -1,11 +1,9 @@
 import "./easter-eggs/index";
 import { projectLoader } from "./projects/loader";
 import { pickRandom } from "./util/random";
-import { Yapper, resolveYap, STARTUP_YAPS } from "./yapper";
+import { yapper, Yapper, resolveYap, STARTUP_YAPS } from "./yapper";
 
 if (document.querySelector("div#projects-grid")) projectLoader();
-
-const yapper = new Yapper();
 
 document
   .querySelector("[summon-yapper]")!
@@ -17,6 +15,10 @@ document
     yapper.yap(line, true);
   });
 
-Reflect.set(window, "$", {
-  yapper,
-});
+// Globals
+declare global {
+  interface Window {
+    yapper: Yapper;
+  }
+}
+window.yapper = yapper;

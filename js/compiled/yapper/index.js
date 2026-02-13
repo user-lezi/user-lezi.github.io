@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Yapper = void 0;
+exports.yapper = exports.Yapper = void 0;
 const markdown_1 = require("../util/markdown");
 class Yapper {
     container;
@@ -122,4 +122,5 @@ class Yapper {
     }
 }
 exports.Yapper = Yapper;
+exports.yapper = new Yapper();
 __exportStar(require("./lines"), exports);

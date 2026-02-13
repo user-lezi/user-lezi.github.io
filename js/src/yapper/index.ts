@@ -212,4 +212,5 @@ export class Yapper {
   }
 }
 
+export const yapper = new Yapper();
 export * from "./lines";
