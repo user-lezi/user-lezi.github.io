@@ -464,14 +464,254 @@
     }
   });
 
+  // js/compiled/util/random.js
+  var require_random = __commonJS({
+    "js/compiled/util/random.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.pickRandom = pickRandom;
+      function pickRandom(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+    }
+  });
+
+  // js/compiled/yapper/lines.js
+  var require_lines = __commonJS({
+    "js/compiled/yapper/lines.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.STARTUP_YAPS = void 0;
+      exports.resolveYap = resolveYap;
+      var random_1 = require_random();
+      exports.STARTUP_YAPS = [
+        "oh nice, another curious soul",
+        "this site contains at least one questionable decision",
+        () => `current vibe check: ${Math.floor(Math.random() * 100)}%`,
+        "**please DO NOT feed the mascot after midnight**",
+        () => {
+          const hour = (/* @__PURE__ */ new Date()).getHours();
+          if (hour < 5)
+            return "sleep is optional i guess";
+          if (hour < 12)
+            return "gm internet person";
+          if (hour < 18)
+            return "afternoon productivity arc?";
+          return "evening scrolling detected";
+        },
+        () => {
+          const day = (/* @__PURE__ */ new Date()).getDay();
+          const days = [
+            "sunday = existential dread preview",
+            "monday moment",
+            "tuesday is just monday 2",
+            "midweek survival checkpoint",
+            "thursday pretending to be productive",
+            "friday detected \u{1F440}",
+            "weekend energy unlocked"
+          ];
+          return days[day];
+        },
+        () => {
+          const types = [
+            "lurker",
+            "developer",
+            "speedrunner",
+            "bug hunter",
+            "chaos tester"
+          ];
+          return `you look like a *${(0, random_1.pickRandom)(types)}*`;
+        },
+        () => {
+          const rand = () => Math.floor(Math.random() * 40) + 60;
+          return (0, random_1.pickRandom)([
+            `${rand()}% chance you clicked this accidentally`,
+            `${rand()}% of users pretend they understand this site`,
+            `${rand()}% confidence you are procrastinating`,
+            `${rand()}% chance you said "just one minute"`,
+            `${rand()}% of stats are made up anyway`,
+            `${rand()}% chance you forgot why you opened this`
+          ]);
+        },
+        () => {
+          const width = window.innerWidth;
+          if (width < 500)
+            return "tiny screen gang";
+          if (width < 1e3)
+            return "respectable viewport";
+          return "ultrawide overlord detected";
+        },
+        () => {
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          return `broadcasting from ${tz}`;
+        },
+        async () => {
+          if (!("getBattery" in navigator))
+            return "battery unknown, vibes full";
+          const battery = await navigator.getBattery();
+          return `battery morale: ${Math.round(battery.level * 100)}%`;
+        }
+      ];
+      async function resolveYap(line) {
+        return typeof line === "function" ? await line() : line;
+      }
+    }
+  });
+
+  // js/compiled/yapper/index.js
+  var require_yapper = __commonJS({
+    "js/compiled/yapper/index.js"(exports) {
+      "use strict";
+      var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        var desc = Object.getOwnPropertyDescriptor(m, k);
+        if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+          desc = { enumerable: true, get: function() {
+            return m[k];
+          } };
+        }
+        Object.defineProperty(o, k2, desc);
+      }) : (function(o, m, k, k2) {
+        if (k2 === void 0) k2 = k;
+        o[k2] = m[k];
+      }));
+      var __exportStar = exports && exports.__exportStar || function(m, exports2) {
+        for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p)) __createBinding(exports2, m, p);
+      };
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.Yapper = void 0;
+      var markdown_1 = require_markdown();
+      var Yapper = class {
+        container;
+        bubble;
+        avatar;
+        queue = [];
+        isTalking = false;
+        visible = false;
+        wpm = 200;
+        constructor() {
+          this.container = document.createElement("div");
+          this.container.classList.add("fixed", "bottom-6", "right-6", "z-[9999]", "flex", "items-end", "justify-end", "translate-y-[140%]", "transition-transform", "duration-300", "ease-out");
+          this.avatar = document.createElement("img");
+          this.avatar.src = "./images/yapper.jpg";
+          this.avatar.classList.add("w-16", "h-16", "rounded-full", "shadow-lg", "shrink-0", "transition-transform", "duration-300", "ease-[cubic-bezier(.34,1.56,.64,1)]");
+          this.bubble = document.createElement("div");
+          this.bubble.classList.add("mr-3", "px-3", "py-2", "inline-block", "w-fit", "max-w-[280px]", "rounded-xl", "text-sm", "leading-relaxed", "bg-[#0e0f14]", "text-slate-200", "shadow-xl", "opacity-0", "translate-y-2", "transition-all", "duration-200", "pointer-events-none", "whitespace-pre-wrap", "break-words", "[overflow-wrap:anywhere]", "[&_code]:bg-black/40", "[&_code]:px-1", "[&_code]:rounded", "[&_code]:font-mono", "[&_a]:text-blue-400", "[&_a:hover]:underline");
+          this.container.append(this.bubble, this.avatar);
+          document.body.appendChild(this.container);
+        }
+        show() {
+          this.visible = true;
+          this.container.classList.remove("translate-y-[140%]");
+          this.container.classList.add("translate-y-0");
+          this.processQueue();
+        }
+        hide() {
+          this.visible = false;
+          this.container.classList.add("translate-y-[140%]");
+          this.container.classList.remove("translate-y-0");
+        }
+        yap(msg, force = false) {
+          if (force)
+            this.queue.unshift(msg);
+          else
+            this.queue.push(msg);
+          this.processQueue();
+        }
+        async processQueue() {
+          if (this.isTalking || !this.visible)
+            return;
+          if (!this.queue.length)
+            return;
+          this.isTalking = true;
+          this.startTalking();
+          const msg = this.queue.shift();
+          await this.typeMessage(msg);
+          await this.sleep(this.getReadingTime(msg));
+          this.stopBubble();
+          await this.sleep(200);
+          this.isTalking = false;
+          if (!this.queue.length)
+            this.stopTalking();
+          this.processQueue();
+        }
+        startTalking() {
+          this.avatar.classList.add("-translate-x-2");
+          this.bubble.classList.remove("opacity-0", "translate-y-2");
+          this.bubble.classList.add("opacity-100", "translate-y-0");
+        }
+        stopTalking() {
+          this.avatar.classList.remove("-translate-x-2");
+        }
+        stopBubble() {
+          this.bubble.classList.add("opacity-0", "translate-y-2");
+          this.bubble.classList.remove("opacity-100", "translate-y-0");
+        }
+        async typeMessage(msg) {
+          let current = "";
+          for (let i = 0; i < msg.length; i++) {
+            const char = msg[i];
+            current += char;
+            this.bubble.innerHTML = (0, markdown_1.parseMarkdown)(current);
+            await this.sleep(this.getTypingDelay(char));
+          }
+        }
+        getTypingDelay(char) {
+          const mdSymbols = "*`[()_~";
+          if (char === "]")
+            return 140;
+          if (mdSymbols.includes(char))
+            return 2;
+          if (".!?".includes(char))
+            return 200 + Math.random() * 80;
+          if (",:;".includes(char))
+            return 120 + Math.random() * 60;
+          return 10 + Math.random() * 18;
+        }
+        getReadingTime(text) {
+          const words = text.trim().split(/\s+/).length;
+          const factor = this.getWordScalingFactor(words);
+          const effectiveWords = words * factor;
+          return effectiveWords / this.wpm * 6e4 + 600;
+        }
+        getWordScalingFactor(words) {
+          if (words <= 16)
+            return 1;
+          if (words >= 60)
+            return 0.5;
+          const t = (words - 16) / (60 - 16);
+          return 1 - t * 0.5;
+        }
+        sleep(ms) {
+          return new Promise((r) => setTimeout(r, ms));
+        }
+      };
+      exports.Yapper = Yapper;
+      __exportStar(require_lines(), exports);
+    }
+  });
+
   // js/compiled/index.js
   var require_index = __commonJS({
     "js/compiled/index.js"(exports) {
       Object.defineProperty(exports, "__esModule", { value: true });
       require_easter_eggs();
       var loader_1 = require_loader();
+      var random_1 = require_random();
+      var yapper_1 = require_yapper();
       if (document.querySelector("div#projects-grid"))
         (0, loader_1.projectLoader)();
+      var yapper = new yapper_1.Yapper();
+      document.querySelector("[summon-yapper]").addEventListener("click", async () => {
+        if (yapper.visible)
+          return;
+        yapper.show();
+        const line = await (0, yapper_1.resolveYap)((0, random_1.pickRandom)(yapper_1.STARTUP_YAPS));
+        yapper.yap(line, true);
+      });
+      Reflect.set(window, "$", {
+        yapper
+      });
     }
   });
   require_index();
