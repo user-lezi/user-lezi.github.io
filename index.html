@@ -42,7 +42,6 @@
 
     <!-- Tailwind -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
     <link rel="stylesheet" href="style.css" />
   </head>
 
@@ -198,6 +197,13 @@
       <span style="color: rgb(var(--accent-code))">♥</span> by Lezii
     </footer>
 
-    <script src="js/bundle.js"></script>
+    <!-- JS -->
+    <script>
+      let debug = localStorage.getItem("debugMode") ?? "false";
+      let script = document.createElement("script");
+      script.src = `js/bundle${debug == "true" ? "" : ".min"}.js`;
+      document.body.appendChild(script);
+      localStorage.setItem("debugMode", debug);
+    </script>
   </body>
 </html>

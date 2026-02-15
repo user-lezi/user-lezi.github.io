@@ -489,6 +489,8 @@
       exports.easterEggs = void 0;
       require_lont();
       var actions_1 = require_actions();
+      var yapper_1 = require_yapper();
+      var sleep_1 = require_sleep();
       exports.easterEggs = [
         {
           sequence: [
@@ -508,6 +510,20 @@
           },
           description: "Konami console log",
           once: true
+        },
+        {
+          sequence: ["d", "e", "b", "u", "g"],
+          action: async () => {
+            let debug = localStorage.getItem("debugMode");
+            if (debug && debug == "true") {
+              localStorage.setItem("debugMode", "false");
+              yapper_1.yapper.yap("that will be a great choice.");
+            } else {
+              localStorage.setItem("debugMode", "true");
+              yapper_1.yapper.yap(`No way you want to debug...`);
+            }
+            await (0, sleep_1.sleep)(1e3);
+          }
         },
         {
           sequence: ["u", "w", "u"],

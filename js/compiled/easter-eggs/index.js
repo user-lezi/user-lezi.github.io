@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.easterEggs = void 0;
 require("./lont");
 const actions_1 = require("./actions");
+const yapper_1 = require("../yapper");
+const sleep_1 = require("../util/sleep");
 exports.easterEggs = [
     {
         sequence: [
@@ -22,6 +24,21 @@ exports.easterEggs = [
         },
         description: "Konami console log",
         once: true,
+    },
+    {
+        sequence: ["d", "e", "b", "u", "g"],
+        action: async () => {
+            let debug = localStorage.getItem("debugMode");
+            if (debug && debug == "true") {
+                localStorage.setItem("debugMode", "false");
+                yapper_1.yapper.yap("that will be a great choice.");
+            }
+            else {
+                localStorage.setItem("debugMode", "true");
+                yapper_1.yapper.yap(`No way you want to debug...`);
+            }
+            await (0, sleep_1.sleep)(1000);
+        },
     },
     {
         sequence: ["u", "w", "u"],

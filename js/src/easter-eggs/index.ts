@@ -1,5 +1,7 @@
 import "./lont";
 import { uwuifyPage, spinAccentHue, undoUwuifyPage } from "./actions";
+import { yapper } from "../yapper";
+import { sleep } from "../util/sleep";
 
 export type EggAction = () => void | Promise<void>;
 
@@ -33,6 +35,20 @@ export const easterEggs: EasterEgg[] = [
     },
     description: "Konami console log",
     once: true,
+  },
+  {
+    sequence: ["d", "e", "b", "u", "g"],
+    action: async () => {
+      let debug = localStorage.getItem("debugMode");
+      if (debug && debug == "true") {
+        localStorage.setItem("debugMode", "false");
+        yapper.yap("that will be a great choice.");
+      } else {
+        localStorage.setItem("debugMode", "true");
+        yapper.yap(`No way you want to debug...`);
+      }
+      await sleep(1000); // idk why i do this shit
+    },
   },
   {
     sequence: ["u", "w", "u"],
