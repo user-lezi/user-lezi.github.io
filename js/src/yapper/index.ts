@@ -1,4 +1,6 @@
 import { parseMarkdown } from "../util/markdown";
+import { pickRandom } from "../util/random";
+import { resolveYap, RANDOM_YAPS, UNCOMMON_RANDOM_YAPS } from "./lines";
 
 export class Yapper {
   private container: HTMLDivElement;
@@ -7,6 +9,10 @@ export class Yapper {
 
   private queue: string[] = [];
   private isTalking = false;
+
+  private idleInterval?: number;
+  private lastYapTime = 0;
+  private readonly idleCooldown = 9000; // minimum gap between yaps
 
   public visible = false;
   public wpm = 200;
@@ -89,6 +95,7 @@ export class Yapper {
     this.container.classList.add("translate-y-0");
 
     this.processQueue();
+    this.startIdleYapping();
   }
 
   hide() {
@@ -180,6 +187,32 @@ export class Yapper {
 
     // normal typing
     return 10 + Math.random() * 18;
+  }
+
+  /* idle yap */
+  startIdleYapping() {
+    if (this.idleInterval) return;
+
+    this.idleInterval = window.setInterval(async () => {
+      if (!this.visible) return;
+      if (this.queue.length > 0) return; // don't interrupt active speech
+      if (document.hidden) return; // don't yap when tab inactive
+
+      const now = Date.now();
+      if (now - this.lastYapTime < this.idleCooldown) return;
+
+      let yaps = RANDOM_YAPS;
+      if (Math.random() < 0.4) yaps = UNCOMMON_RANDOM_YAPS;
+      const line = await resolveYap(pickRandom(yaps));
+      this.yap(line);
+      this.lastYapTime = now;
+      await this.sleep(Math.random() * 3000); // random delay
+    }, 5000); // check every 5s
+  }
+  stopIdleYapping() {
+    if (!this.idleInterval) return;
+    clearInterval(this.idleInterval);
+    this.idleInterval = undefined;
   }
 
   /* helpers */

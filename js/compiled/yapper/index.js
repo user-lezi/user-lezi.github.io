@@ -16,12 +16,17 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.yapper = exports.Yapper = void 0;
 const markdown_1 = require("../util/markdown");
+const random_1 = require("../util/random");
+const lines_1 = require("./lines");
 class Yapper {
     container;
     bubble;
     avatar;
     queue = [];
     isTalking = false;
+    idleInterval;
+    lastYapTime = 0;
+    idleCooldown = 9000;
     visible = false;
     wpm = 200;
     constructor() {
@@ -40,6 +45,7 @@ class Yapper {
         this.container.classList.remove("translate-y-[140%]");
         this.container.classList.add("translate-y-0");
         this.processQueue();
+        this.startIdleYapping();
     }
     hide() {
         this.visible = false;
@@ -102,6 +108,34 @@ class Yapper {
         if (",:;".includes(char))
             return 120 + Math.random() * 60;
         return 10 + Math.random() * 18;
+    }
+    startIdleYapping() {
+        if (this.idleInterval)
+            return;
+        this.idleInterval = window.setInterval(async () => {
+            if (!this.visible)
+                return;
+            if (this.queue.length > 0)
+                return;
+            if (document.hidden)
+                return;
+            const now = Date.now();
+            if (now - this.lastYapTime < this.idleCooldown)
+                return;
+            let yaps = lines_1.RANDOM_YAPS;
+            if (Math.random() < 0.4)
+                yaps = lines_1.UNCOMMON_RANDOM_YAPS;
+            const line = await (0, lines_1.resolveYap)((0, random_1.pickRandom)(yaps));
+            this.yap(line);
+            this.lastYapTime = now;
+            await this.sleep(Math.random() * 3000);
+        }, 5000);
+    }
+    stopIdleYapping() {
+        if (!this.idleInterval)
+            return;
+        clearInterval(this.idleInterval);
+        this.idleInterval = undefined;
     }
     getReadingTime(text) {
         const words = text.trim().split(/\s+/).length;

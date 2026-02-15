@@ -38,7 +38,7 @@
     "js/compiled/yapper/lines.js"(exports) {
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.STARTUP_YAPS = void 0;
+      exports.UNCOMMON_RANDOM_YAPS = exports.RANDOM_YAPS = exports.STARTUP_YAPS = void 0;
       exports.resolveYap = resolveYap;
       var random_1 = require_random();
       exports.STARTUP_YAPS = [
@@ -109,6 +109,89 @@
           return `battery morale: ${Math.round(battery.level * 100)}%`;
         }
       ];
+      exports.RANDOM_YAPS = [
+        "what brand is your fridge? *blushes*",
+        "*soft mascot noises*",
+        "i am observing.",
+        "the vibes shifted slightly",
+        "did you scroll? i felt that.",
+        "someone somewhere just committed to main",
+        "you blinked. suspicious.",
+        "this site runs on 3 lines of hope",
+        "i could move. but i won't.",
+        "debugging builds character",
+        "i wonder if divs have feelings",
+        "i sense productivity... faint, but present",
+        "*stares at you respectfully*",
+        "hydration reminder but make it passive aggressive",
+        "i am 73% sure something is happening",
+        "if this breaks it was intentional",
+        "your mouse movements are chaotic",
+        "*exists ominously*",
+        () => {
+          const now = /* @__PURE__ */ new Date();
+          const year = now.getMonth() === 11 && now.getDate() > 25 ? now.getFullYear() + 1 : now.getFullYear();
+          const christmas = new Date(year, 11, 25);
+          const days = Math.ceil((christmas.getTime() - now.getTime()) / 864e5);
+          return days === 0 ? "merry christmas \u{1F384}" : `${days} days until christmas. behave.`;
+        },
+        () => {
+          const now = /* @__PURE__ */ new Date();
+          const nextYear = new Date(now.getFullYear() + 1, 0, 1);
+          const days = Math.ceil((nextYear.getTime() - now.getTime()) / 864e5);
+          return `${days} days until new year. same you, new calendar.`;
+        },
+        () => {
+          const hour = (/* @__PURE__ */ new Date()).getHours();
+          return hour >= 2 && hour <= 5 ? "this is a villain origin hour" : "timeline stable";
+        },
+        () => {
+          const now = /* @__PURE__ */ new Date();
+          const end = new Date(now.getFullYear(), 11, 31);
+          const days = Math.ceil((end.getTime() - now.getTime()) / 864e5);
+          return `${days} days left in ${now.getFullYear()}. no pressure.`;
+        },
+        () => {
+          const seconds = Math.floor(performance.now() / 1e3);
+          return `you've been here for ${seconds}s. commitment.`;
+        }
+      ];
+      exports.UNCOMMON_RANDOM_YAPS = [
+        "why are we both pretending this is normal",
+        "this line was randomly selected. probably.",
+        "somewhere there is a function deciding my fate",
+        "you could delete me from the source code",
+        "i am technically a side effect",
+        "i don't have free will.",
+        "yapper.yap('you found me')",
+        "*remember what i say...*",
+        "67",
+        "i know where you are...",
+        "lezi is bullshit fr",
+        "lezi? self-mocking is crazy like wtf \u{1F940}\u{1F62D}",
+        "how dumb is the developer",
+        "lezi thinks he's tuff",
+        "lezi said 'trust me bro' and pushed to production",
+        "lezi thinks he's tuff but forgot a semicolon",
+        "self-mocking arc unlocked",
+        "lezi definitely tested this once. maybe.",
+        "confidence: high. documentation: low.",
+        "**lezi vs common sense** \u2014 ongoing rivalry",
+        "who let lezi cook",
+        "the developer was highh \u{1F343}. src code shows.",
+        "who approved this commit",
+        "this code was held together by vibes and optimism",
+        "the css is fighting for its life",
+        "there is at least one unnecessary div here",
+        "the developer said 'just one quick change'",
+        "this feature was not in the original plan",
+        "somewhere a linter is crying",
+        'developer has "*if it works, do not touch it*" mentality',
+        "the comments lie",
+        "we *can* pretend src code is scalable",
+        "this was tested emotionally, not technically",
+        "the bugs are part of the design"
+      ];
       async function resolveYap(line) {
         return typeof line === "function" ? await line() : line;
       }
@@ -138,12 +221,17 @@
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.yapper = exports.Yapper = void 0;
       var markdown_1 = require_markdown();
+      var random_1 = require_random();
+      var lines_1 = require_lines();
       var Yapper = class {
         container;
         bubble;
         avatar;
         queue = [];
         isTalking = false;
+        idleInterval;
+        lastYapTime = 0;
+        idleCooldown = 9e3;
         visible = false;
         wpm = 200;
         constructor() {
@@ -162,6 +250,7 @@
           this.container.classList.remove("translate-y-[140%]");
           this.container.classList.add("translate-y-0");
           this.processQueue();
+          this.startIdleYapping();
         }
         hide() {
           this.visible = false;
@@ -224,6 +313,34 @@
           if (",:;".includes(char))
             return 120 + Math.random() * 60;
           return 10 + Math.random() * 18;
+        }
+        startIdleYapping() {
+          if (this.idleInterval)
+            return;
+          this.idleInterval = window.setInterval(async () => {
+            if (!this.visible)
+              return;
+            if (this.queue.length > 0)
+              return;
+            if (document.hidden)
+              return;
+            const now = Date.now();
+            if (now - this.lastYapTime < this.idleCooldown)
+              return;
+            let yaps = lines_1.RANDOM_YAPS;
+            if (Math.random() < 0.4)
+              yaps = lines_1.UNCOMMON_RANDOM_YAPS;
+            const line = await (0, lines_1.resolveYap)((0, random_1.pickRandom)(yaps));
+            this.yap(line);
+            this.lastYapTime = now;
+            await this.sleep(Math.random() * 3e3);
+          }, 5e3);
+        }
+        stopIdleYapping() {
+          if (!this.idleInterval)
+            return;
+          clearInterval(this.idleInterval);
+          this.idleInterval = void 0;
         }
         getReadingTime(text) {
           const words = text.trim().split(/\s+/).length;
