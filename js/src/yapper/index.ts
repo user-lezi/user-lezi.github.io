@@ -9,7 +9,6 @@ export class Yapper {
 
   private queue: string[] = [];
   private isTalking = false;
-
   private idleInterval?: number;
   private lastYapTime = 0;
   private readonly idleCooldown = 9000; // minimum gap between yaps
@@ -19,7 +18,6 @@ export class Yapper {
 
   constructor() {
     this.container = document.createElement("div");
-
     this.container.classList.add(
       "fixed",
       "bottom-6",
@@ -33,10 +31,8 @@ export class Yapper {
       "duration-300",
       "ease-out",
     );
-
     this.avatar = document.createElement("img");
     this.avatar.src = "./images/yapper.jpg";
-
     this.avatar.classList.add(
       "w-16",
       "h-16",
@@ -47,9 +43,7 @@ export class Yapper {
       "duration-300",
       "ease-[cubic-bezier(.34,1.56,.64,1)]",
     );
-
     this.bubble = document.createElement("div");
-
     this.bubble.classList.add(
       "mr-3",
       "px-3",
@@ -82,7 +76,6 @@ export class Yapper {
       "[&_a]:text-blue-400",
       "[&_a:hover]:underline",
     );
-
     this.container.append(this.bubble, this.avatar);
     document.body.appendChild(this.container);
   }
@@ -120,22 +113,16 @@ export class Yapper {
     if (!this.queue.length) return;
 
     this.isTalking = true;
-
     this.startTalking();
 
     const msg = this.queue.shift()!;
     await this.typeMessage(msg);
-
     await this.sleep(this.getReadingTime(msg));
-
     this.stopBubble();
-
     await this.sleep(200);
 
     this.isTalking = false;
-
     if (!this.queue.length) this.stopTalking();
-
     this.processQueue();
   }
 
@@ -144,7 +131,6 @@ export class Yapper {
   private startTalking() {
     // avatar move
     this.avatar.classList.add("-translate-x-2");
-
     // bubble show
     this.bubble.classList.remove("opacity-0", "translate-y-2");
     this.bubble.classList.add("opacity-100", "translate-y-0");
@@ -167,9 +153,7 @@ export class Yapper {
     for (let i = 0; i < msg.length; i++) {
       const char = msg[i];
       current += char;
-
       this.bubble.innerHTML = parseMarkdown(current);
-
       await this.sleep(this.getTypingDelay(char));
     }
   }
@@ -219,22 +203,17 @@ export class Yapper {
 
   private getReadingTime(text: string) {
     const words = text.trim().split(/\s+/).length;
-
     // long messages skim faster
     const factor = this.getWordScalingFactor(words);
-
     const effectiveWords = words * factor;
-
     return (effectiveWords / this.wpm) * 60000 + 600;
   }
 
   private getWordScalingFactor(words: number) {
     // <= 16 words → full reading time
     if (words <= 16) return 1;
-
     // >= 60 words → 50% reading time
     if (words >= 60) return 0.5;
-
     // smooth interpolation between 16 → 60
     const t = (words - 16) / (60 - 16);
     return 1 - t * 0.5;

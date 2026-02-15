@@ -12,7 +12,6 @@ export function spinAccentHue() {
     .trim();
 
   let [r, g, b] = current.split(",").map((x) => parseInt(x.trim()));
-
   let { h, s, l } = Converter.rgbToHsl(r, g, b);
 
   let step = 0;
@@ -45,7 +44,6 @@ export async function uwuifyPage(delay = 20) {
   for (const node of nodes) {
     const original = node.textContent!;
     const uwu = uwuifyText(original);
-
     if (uwu !== original) {
       const span = document.createElement("span");
       span.textContent = uwu;
@@ -53,9 +51,7 @@ export async function uwuifyPage(delay = 20) {
       span.dataset.original = original;
       span.style.background = "rgba(var(--accent-code), 0.15)";
       span.style.transition = "background 1s ease";
-
       node.replaceWith(span);
-
       // fade highlight
       setTimeout(
         () => {
@@ -78,14 +74,10 @@ export async function undoUwuifyPage(delay = 10) {
   for (const span of uwuNodes) {
     const original = span.dataset.original;
     if (!original) continue;
-
     const textNode = document.createTextNode(original);
-
     span.style.background = "rgba(var(--accent-code), 0.2)";
     span.style.transition = "background 0.4s ease";
-
     span.replaceWith(textNode);
-
     await sleep(delay);
   }
 }

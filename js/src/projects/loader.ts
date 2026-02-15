@@ -21,10 +21,8 @@ function sortProjects(projects: IProject[]): IProject[] {
     if (a.order !== undefined || b.order !== undefined) {
       return (a.order ?? 999) - (b.order ?? 999);
     }
-
     const pA = projectPriority(a);
     const pB = projectPriority(b);
-
     if (pA !== pB) return pA - pB;
     return a.name.localeCompare(b.name);
   });
@@ -39,7 +37,6 @@ function sortTags(tags: ProjectTag[]): ProjectTag[] {
   return [...tags].sort((a, b) => {
     const pA = tagPriority(a);
     const pB = tagPriority(b);
-
     if (pA !== pB) return pA - pB;
     return a.localeCompare(b);
   });
@@ -50,12 +47,9 @@ export async function projectLoader() {
   const template = document.getElementById(
     "project-template",
   ) as HTMLTemplateElement | null;
-
   if (!grid || !template) return;
-
   Projects.forEach((project) => {
     const clone = template.content.cloneNode(true) as DocumentFragment;
-
     const icon = clone.querySelector<HTMLDivElement>(".project-icon");
     const name = clone.querySelector<HTMLHeadingElement>(".project-name");
     const desc = clone.querySelector<HTMLParagraphElement>(".project-desc");
@@ -71,45 +65,34 @@ export async function projectLoader() {
 
     // GitHub
     github.href = `https://github.com/${project.github}`;
-
     // Website
     if (project.web) {
       web.href = project.web;
       web.classList.remove("hidden");
     }
-
     // Tags
     const sortedTags = sortTags(project.tags);
-
     sortedTags.forEach((tag) => {
       const chip = document.createElement("span");
       chip.textContent = tag;
-
       chip.dataset.tag = tag;
-
       chip.className =
         "text-[0.65rem] px-2 py-[2px] rounded-md " +
         "bg-white/8 text-slate-300 border border-white/10";
 
       const color = ColoredTags[tag];
-
       if (color || AccentTags.includes(tag as any)) {
         let resolved = resolveColor(color ?? "var(--accent-code)");
-
         chip.dataset.colored = "true";
-
         if (AccentTags.includes(tag as any)) {
           chip.dataset.accent = "true";
         }
-
         chip.style.background = `${resolved}22`;
         chip.style.color = resolved;
         chip.style.borderColor = `${resolved}55`;
       }
-
       tags.appendChild(chip);
     });
-
     // Icon
     if (project.image) {
       icon.style.backgroundImage = `url(${project.image})`;
@@ -120,7 +103,6 @@ export async function projectLoader() {
       icon.style.background = `rgba(var(--accent-code), 0.15)`;
       icon.style.color = `rgb(var(--accent-code))`;
     }
-
     grid.appendChild(clone);
   });
 }

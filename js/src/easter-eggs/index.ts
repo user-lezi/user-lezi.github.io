@@ -83,11 +83,8 @@ window.addEventListener("keydown", (e) => {
   if (keyBuffer.length > maxSequenceLength) keyBuffer.shift();
   for (const egg of easterEggs) {
     if (egg.sequence.length === 0) continue; // disabled
-
     if (!sequenceAtEnd(egg.sequence, keyBuffer)) continue;
-
     if (eggRunning) return; // lock
-
     eggRunning = true;
 
     try {
