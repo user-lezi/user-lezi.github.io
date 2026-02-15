@@ -15,6 +15,17 @@ document
     yapper.yap(line, true);
   });
 
+// Call yapper if not activated for 1.5 minutes
+setTimeout(
+  () => {
+    if (yapper.visible) return;
+    yapper.show();
+
+    yapper.yap("Hey! You here for too long?", true);
+  },
+  1.5 * 60 * 1000,
+);
+
 // Globals
 declare global {
   interface Window {

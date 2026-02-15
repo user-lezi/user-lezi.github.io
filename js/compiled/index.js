@@ -15,4 +15,10 @@ document
     const line = await (0, yapper_1.resolveYap)((0, random_1.pickRandom)(yapper_1.STARTUP_YAPS));
     yapper_1.yapper.yap(line, true);
 });
+setTimeout(() => {
+    if (yapper_1.yapper.visible)
+        return;
+    yapper_1.yapper.show();
+    yapper_1.yapper.yap("Hey! You here for too long?", true);
+}, 1.5 * 60 * 1000);
 window.yapper = yapper_1.yapper;
