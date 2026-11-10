@@ -1,0 +1,92 @@
+:root {
+  /* Theme dark */
+  --theme-dark-primary: #fffefe;
+  --theme-dark-secondary: #171717;
+  --theme-dark-muted: #b1b1b1;
+
+  /* Theme light */
+  --theme-light-primary: #171717;
+  --theme-light-secondary: #fffefe;
+  --theme-light-muted: #737373;
+
+  --color-primary: var(--theme-light-primary);
+  --color-secondary: var(--theme-light-secondary);
+  --color-muted: var(--theme-light-muted);
+
+  --font-main: "Inter", sans-serif;
+  --spacing-section: 2rem;
+  --radius-card: 1rem;
+}
+#intro-section h1,
+#subtitle,
+#meow-container,
+.intro-arrow {
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+  height: 20%;
+}
+
+.manga-dots {
+  background-image: radial-gradient(var(--color-muted) 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.85;
+}
+
+/* Manga Grid Pattern for Card Headers */
+.manga-panel-grid {
+  background-size: 20px 20px;
+  background-image:
+    linear-gradient(
+      to right,
+      var(--color-primary) 0.05rem,
+      transparent 0.05rem
+    ),
+    linear-gradient(
+      to bottom,
+      var(--color-primary) 0.05rem,
+      transparent 0.05rem
+    );
+  opacity: 0.12;
+}
+
+/* Comic Panel Card Styling */
+.manga-card {
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-secondary);
+  box-shadow: 4px 4px 0 0 var(--color-primary);
+  translate: 0 0;
+  transition:
+    translate 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.manga-card:hover {
+  translate: 2px 2px;
+  box-shadow: 0 0 0 0 var(--color-primary);
+}
+
+.manga-button {
+  border: 2px solid var(--color-primary);
+  box-shadow: 2px 2px 0px 0px var(--color-primary);
+  translate: 0 0;
+  transition:
+    translate 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.manga-button:active,
+.manga-button:hover {
+  translate: 2px 2px;
+  box-shadow: 0px 0px 0px 0px var(--color-primary);
+}

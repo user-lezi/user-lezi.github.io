@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@tabs/*": ["src/tabs/*"],
+      "@constants/*": ["src/constants/*"],
+      "@util/*": ["src/util/*"]
+    }
+  },
+  "typeRoots": ["./node_modules/@types/"],
+  "noImplicitAny": false,
+  "include": ["src/**/*.ts"]
+}

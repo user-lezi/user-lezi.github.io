@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Hogfish";
+  src: url("./assets/f/hogfish.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-bricolage {
+  font-family: "Bricolage Grotesque", sans-serif;
+}
+
+.font-hogfish {
+  font-family: "Hogfish", display, sans-serif;
+}
