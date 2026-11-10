@@ -1,7 +1,7 @@
 const { join } = require("node:path");
 const { context } = require("esbuild");
 
-const tabs = ["home"];
+const tabs = ["home", "404"];
 const tabFiles = tabs.map((tab) => ({
   in: join(process.cwd(), "src/tabs", `${tab}.ts`),
   out: join(process.cwd(), "public/bundle", `${tab}.js`),
